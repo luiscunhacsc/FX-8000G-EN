@@ -1,0 +1,63 @@
+3D MAZE — CASIO fx-8000G — US ENGLISH
+
+Explore a maze in first-person perspective and find the exit marked X.
+The fixed map is 7 by 7 cells, including its outer walls.
+
+OPEN THE GAME
+Open FX-8000G.html, then Library > Games > 3D Maze · 408 bytes.
+Click Copy to editor, Send to calculator, and Run P0.
+You can also use Open text to import programs/maze-3d.fxp.
+
+HOW TO PLAY
+Direct controls are enabled when you run the game.
+When Ready appears, press:
+  4 — turn left 90 degrees
+  6 — turn right 90 degrees
+  8 — move forward one cell
+No EXE is needed. Wait for the next view before making another move.
+You can also click the three movement buttons below the calculator
+or its 4, 6, and 8 keys. The 7 key is not a game command.
+Running the game moves keyboard focus to the LCD. If you are editing
+text, click the LCD to use your keyboard for movement again.
+The interface sends EXE, number, EXE to the calculator.
+For manual input, uncheck Direct controls. With the corridor visible,
+press EXE, enter 4, 6, or 8, then press EXE again.
+On your keyboard, Enter means EXE. Do not use the arrow keys.
+Speed 4× makes drawing faster. AC/Esc stops the game.
+Move into the cell marked X: the calculator displays EXIT.
+Run the program again to return to the entrance.
+For sessions from before v0.3, send the program to the calculator
+again to enable direct controls.
+
+SIZE AND COMPATIBILITY
+408 bytes of program memory, measured in the emulated ROM's WRT mode:
+1,446 bytes free before installation; 1,038 afterward.
+The .fxp file is readable text, so its file size is larger than the
+program's memory footprint. It is not a binary memory image.
+Validated in the emulated fx-8000G; not tested on physical hardware
+or with fx-7000G firmware.
+Uses A, B, C, D, K, M, P, R, S, and T, graph coordinates, and Range.
+No additional variables beyond the standard memories are needed.
+
+IMPLEMENTATION NOTES
+Each walkable cell is one bit of M=6210175645.
+Its index is 7*y+x-8; the entrance is index 0 and the exit is index 32.
+The eight-bit offset keeps the map within the calculator's ten-digit
+input limit. Frac(Int(M/2^N)/2) tests each cell.
+Plot and Line draw up to three levels of depth. Graph Y=0 lies outside
+the viewing range and pauses on the graph before requesting a move.
+The perspective is schematic and turn-based, without continuous animation.
+
+SOLUTION — skip this if you want to explore
+Commands: 8, 8, 4, 8, 8, 8, 8, 6, 8, 8.
+With Direct controls enabled, press each number when the game is ready.
+In manual mode, enter each number between two EXE presses.
+
+Map (S=entrance, E=exit, #=wall):
+#######
+#S#...#
+#.#.###
+#.....#
+#.###.#
+#...#E#
+#######

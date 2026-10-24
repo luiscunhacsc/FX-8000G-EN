@@ -1,0 +1,62 @@
+6210175645->M
+0->P
+7->D
+(-)1->R
+Range 1,9,0,1,9,0
+Lbl 0
+P=32=>Goto 9
+Cls
+4->A
+P->T
+Lbl 3
+A/2->B
+(-)1->S
+Lbl 4
+A->C
+Frac(Int(M/2^(T+S*R))/2)>0=>B->C
+Plot S*A+5,C+5
+Plot S*B+5,B+5
+Line
+Plot S*B+5,5-B
+Line
+Plot S*A+5,5-C
+Line
+S=1=>Goto 5
+1->S
+Goto 4
+Lbl 5
+T+D->T
+T=32=>Goto 8
+Frac(Int(M/2^T)/2)=0=>Goto 6
+B->A
+A>.5=>Goto 3
+Goto 7
+Lbl 6
+Plot 5-B,B+5
+Plot B+5,B+5
+Line
+Plot B+5,5-B
+Plot 5-B,5-B
+Line
+Lbl 7
+Graph Y=0◢
+?->K
+K=8=>Goto 2
+Abs(K-5)!=1=>Goto 0
+D->C
+(K-5)*R->D
+(5-K)*C->R
+Goto 0
+Lbl 2
+Frac(Int(M/2^(P+D))/2)>0=>P+D->P
+Goto 0
+Lbl 8
+Plot 5-B,5-B
+Plot B+5,B+5
+Line
+Plot 5-B,B+5
+Plot B+5,5-B
+Line
+Goto 7
+Lbl 9
+"EXIT"
