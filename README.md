@@ -57,6 +57,10 @@ If a previous session was restored, find this example under **Library → Loops*
 
 **Loading a program does not run it automatically.** This applies to library examples, imported program files, and your own code. You choose when to click **Run**.
 
+**Show run guide** is enabled by default. After a transfer, it shows **MODE → 1 → Prog → program number → EXE** and highlights the next calculator key. Click each highlighted key to run the program yourself, or use the **Run** button to send the sequence. For P0, the program number is **0**; for P3, it is **3**. AC is not needed after entering a program in WRT mode; this follows the [owner’s manual, page 95](https://archive.org/details/casio-fx-8000g-owners-manual/page/n104/mode/1up).
+
+Uncheck **Show run guide** beside the transfer options to hide the instructions and key highlights. Your preference and any unfinished guide are saved with the session.
+
 Try changing `10->B` to `100->B`, send the revised program, and run it again. The result becomes `5050`.
 
 ## What you can explore

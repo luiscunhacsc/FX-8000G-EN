@@ -13,7 +13,9 @@ Explore a maze from a first-person view on the calculator’s 96 × 64 pixel LCD
 3. Choose a destination, such as **P0**. Leave **Replace the selected program** checked to install the complete game in that slot.
 4. Click **Send to calculator**. Watch the lines appear on the LCD as the emulator enters each keystroke, pausing between lines.
 5. Wait for the transfer to finish. The code stays visible in **WRT** mode; **loading does not start the game automatically**.
-6. Click **Run P0**, or Run for your chosen slot. Wait for **Ready** below the calculator before making your first move.
+6. Follow the highlighted calculator keys, or click **Run P0** (Run for your chosen slot). Wait for **Ready** below the calculator before making your first move.
+
+**Show run guide** is on by default. For P0, it walks you through **MODE → 1 → Prog → 0 → EXE**, highlighting the next key as you go. AC is not needed after loading. If you choose another slot, the guide uses that program number. Uncheck **Show run guide** beside the transfer options to hide the hints; your choice is saved with the session.
 
 To load the file from the repository instead, click **Open text** and select [programs/maze-3d.fxp](maze-3d.fxp), then continue from step 3. Both routes load the same game.
 

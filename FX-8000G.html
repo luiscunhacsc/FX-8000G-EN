@@ -9,6 +9,7 @@
 @media(max-width:1000px){main{padding:28px 22px 0}.workspace{grid-template-columns:330px minmax(0,1fr);gap:26px}.intro h1{font-size:32px}.version{display:none}.tabs{gap:13px}.tabs button{font-size:0}.tabs button span{margin:0;font-size:11px}.tabs button b{display:none}.calculator{padding:19px 17px 13px}.key-label{font-size:7px}.library-layout{grid-template-columns:1fr;gap:14px}.library-layout nav{max-height:150px;border:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:3px;padding-right:0;padding-bottom:8px}.session-panel{align-items:start;flex-direction:column}.session-buttons{flex-direction:row;width:100%;min-width:0}.session-buttons button{flex:1}.offline{display:none}.transfer-options{gap:10px}.button-row{gap:6px}.button-row button{font-size:11px}.button-row .primary{gap:8px}}
 @media(max-width:740px){.topbar{padding:16px 20px}.brand{font-size:9px;letter-spacing:1.3px}.topbar .text-button{font-size:10px}.intro{margin-bottom:24px}.intro .eyebrow{font-size:8px;letter-spacing:1px}.intro h1{font-size:30px;max-width:390px}.intro p{font-size:12px;max-width:42ch}.workspace{grid-template-columns:1fr;gap:27px}.machine-area{width:100%;max-width:370px;margin:auto}.machine-area .details{margin-bottom:0}.desk{border-top:1px solid var(--line);padding-top:10px}.tabs{gap:24px}.tabs button span{font-size:12px}.tabs button{padding-top:8px}.tab-panel{min-height:0;padding-top:23px}.panel-heading h2{font-size:24px}.editor-bar{font-size:8px}.library-layout nav{max-height:172px}.session-panel{margin-top:25px}.panel-copy{margin-bottom:18px}.session-panel{flex-direction:row}.session-buttons{flex-direction:column;width:auto;min-width:123px}textarea{font-size:14px;min-height:240px}.intro em{display:inline-block}.key-hint{font-size:10px}footer{font-size:8px;gap:12px;flex-wrap:wrap}.tabs{justify-content:space-between;gap:10px}.guide-steps p{font-size:12px}}
 @media(max-width:360px){main{padding:24px 14px 0}.calculator{padding:17px 13px 12px}.key{font-size:11px}.key-label{font-size:6px}.session-panel{flex-direction:column}.session-buttons{width:100%;flex-direction:row}.tabs button span{font-size:11px}}
+.run-guide{border:1px solid #c4d2b9;border-left:3px solid var(--green);border-radius:5px;background:var(--light);padding:13px 15px;margin:14px 0 18px}.run-guide h3{font-size:14px;margin:0 0 8px;font-weight:600}.run-guide ol{display:flex;flex-wrap:wrap;gap:8px 16px;list-style:none;padding:0;margin:0 0 10px}.run-guide li{position:relative}.run-guide li+li::before{content:'→';position:absolute;left:-13px;color:var(--muted);font-size:11px}.run-guide kbd{display:inline-block;font-size:12px;padding:3px 7px}.run-guide [aria-current=step] kbd{background:var(--green);border-color:var(--green);color:#fff}.run-guide .done kbd{border-color:#7d9871;color:var(--green)}.run-guide p{font-size:11px;margin:5px 0 0;color:var(--green)}.run-guide .caption{color:var(--muted)}.key.run-next{outline:3px solid #f4c96b;outline-offset:3px}.key.run-next:focus-visible{outline-color:#fff;box-shadow:0 0 0 6px #c58b32}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style></head>
 <body>
@@ -42,9 +43,10 @@
         <textarea id="editor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="syntax-hint"></textarea>
         <div class="tokens" aria-label="Insert a command"><button data-insert="->" title="Assignment">→</button><button data-insert="=>" title="Condition">⇒</button><button data-insert="◢" title="Display result and wait">◢</button><button data-insert="?" title="Request input">?</button><button data-insert="Lbl ">Lbl</button><button data-insert="Goto ">Goto</button><button data-insert="Dsz ">Dsz</button><button data-insert="Graph Y=">Graph</button></div>
         <p id="syntax-hint" class="caption">Each line is sent as a new line in the calculator. Use <code>-></code> to assign a value, <code>◢</code> to pause, and <code>(-)</code> for a negative sign.</p>
-        <div class="transfer-options"><label>Destination <select id="slot" aria-label="Destination program"></select></label><label class="checkbox"><input type="checkbox" id="replace" checked> Replace the selected program</label></div>
+        <div class="transfer-options"><label>Destination <select id="slot" aria-label="Destination program"></select></label><label class="checkbox"><input type="checkbox" id="replace" checked> Replace the selected program</label><label class="checkbox"><input type="checkbox" id="show-run-guide" checked> Show run guide</label></div>
         <div class="button-row"><button id="send-program" class="primary">Send to calculator <span>→</span></button><button id="run-program">Run P0</button><button id="cancel-input" hidden>Stop transfer</button></div>
         <div class="transfer-status"><span id="transfer-status" role="status">Ready to send.</span><progress id="transfer-progress" value="0" max="1" hidden></progress></div>
+        <section id="run-guide" class="run-guide" aria-labelledby="run-guide-title" hidden><h3 id="run-guide-title"></h3><ol id="run-guide-keys" aria-label="Calculator keys to press in order"></ol><p id="run-guide-step" role="status" aria-live="polite"></p><p id="run-guide-shortcut" class="caption"></p><p class="caption">Click the highlighted calculator key for each step. Uncheck “Show run guide” above to hide these hints.</p></section>
         <p id="program-help" class="caption" hidden></p>
         <div class="editor-files"><button id="open-program" class="text-button">Open text</button><button id="save-program" class="text-button">Save .fxp ↓</button><button id="undo-editor" class="text-button" disabled>Restore text</button><button id="undo-send" class="text-button" disabled>Undo transfer</button></div>
         <div class="quick-calc"><label for="command">QUICK CALCULATION</label><form id="command-form"><input id="command" placeholder="e.g., sqrt(3^2+4^2)" autocomplete="off" spellcheck="false"><button type="submit" aria-label="Enter calculation and run">EXE ↵</button></form><p class="caption">Switches to RUN mode and evaluates the expression in the firmware.</p></div>
@@ -336,6 +338,7 @@ if(typeof module!=='undefined')module.exports={compileKeys,programKeys,runKeys,D
   let paused=false,queue=[],completed=0,queueTotal=0,queueEnd=null,busy=false,selected=library[7],previousText=null,beforeSend=null,noticeTimer=0,dirty=false,saveAvailable=true;
   const TRANSFER_KEY_MS=120,TRANSFER_LINE_MS=450;
   let slowTransfer=false,nextTransferKey=0,previousTransferKey=null;
+  let runGuide=null,beforeSendGuide=null;
   const maze=library.find(ex=>ex.id==='21');
   let gameSlots=Array(10).fill(false),gameActive=false,beforeSendGames=null;
   const labels=['SHIFT','ALPHA','Prog','←','→','MODE','M Disp','Graph','Range','↑','↓','G↔T',':','ENG','√','x²','log','ln','x⁻¹','° ′ ″','hyp','sin','cos','tan','(−)','→','(',')','xʸ','ʸ√x','7','8','9','DEL','AC','4','5','6','×','÷','1','2','3','+','−','0','.','EXP','Ans','EXE'];
@@ -354,6 +357,34 @@ if(typeof module!=='undefined')module.exports={compileKeys,programKeys,runKeys,D
   $('library-count').textContent=library.length;
   for(const category of [...new Set(library.map(x=>x.category))])$('category').add(new Option(category,category));
   function tell(message,error=false,timeout=7000){clearTimeout(noticeTimer);$('notice').textContent=message;$('notice').classList.toggle('error',error);$('notice').hidden=false;if(timeout)noticeTimer=setTimeout(()=>$('notice').hidden=true,timeout);}
+  function updateRunGuide(){
+    for(const b of keyButtons.values()){b.classList.remove('run-next');b.removeAttribute('aria-describedby');}
+    const visible=!!runGuide&&$('show-run-guide').checked;
+    $('run-guide').hidden=!visible;
+    if(!visible)return;
+    // The manual (p. 95) starts at MODE; AC is only a recovery prefix for the Run shortcut.
+    const {slot,index}=runGuide,keys=runKeys(slot).slice(1);
+    $('run-guide-title').textContent='Run P'+slot+' on the calculator';
+    $('run-guide-keys').replaceChildren();
+    keys.forEach((key,i)=>{const item=document.createElement('li'),cap=document.createElement('kbd');cap.textContent=labels[key-1];item.append(cap);if(i===index)item.setAttribute('aria-current','step');if(i<index)item.className='done';$('run-guide-keys').append(item);});
+    $('run-guide-step').textContent='Step '+(index+1)+' of '+keys.length+': press '+labels[keys[index]-1]+'.';
+    $('run-guide-shortcut').textContent='Or click Run P'+slot+' above to send the whole sequence.';
+    const next=keyButtons.get(keys[index]);next.classList.add('run-next');next.setAttribute('aria-describedby','run-guide-step');
+  }
+  function clearRunGuide(){runGuide=null;updateRunGuide();}
+  function programStarted(slot){
+    gameActive=gameSlots[slot];dirty=true;
+    $('transfer-status').textContent=gameActive?'Maze running. Use 4, 6, and 8 when drawing finishes.':'Program running. EXE continues after pauses; AC stops it.';
+    if(!gameActive&&$('editor').value.trim()===maze.code.trim())tell('To enable direct controls for this session, click “Send to calculator” and run the maze again.',false,0);
+    canvas.focus();
+  }
+  function advanceRunGuide(key){
+    if(!runGuide)return;
+    const {slot,index}=runGuide,keys=runKeys(slot).slice(1);
+    runGuide.index=key===keys[index]?index+1:key===keys[0]?1:0;
+    if(runGuide.index===keys.length){clearRunGuide();programStarted(slot);}else updateRunGuide();
+  }
+  $('show-run-guide').onchange=()=>{updateRunGuide();dirty=true;persist();};
   function lcdContent(){
     const a=machine.lcd.image(false),lines=[];let unknown=0;
     for(let row=0;row<8;row++){let line='';for(let col=0;col<16;col++){let found=-1;for(let c=32;c<256;c++){let match=true;for(let n=0;n<12;n++)if(a[row*192+col*12+n]!==machine.lcd.chr[c*16+n]){match=false;break;}if(match){found=c;break;}}if(found<0){unknown++;line+=' ';}else line+=found<127?String.fromCharCode(found):' ';}if(line.trim())lines.push(line.trim());}
@@ -404,7 +435,7 @@ if(typeof module!=='undefined')module.exports={compileKeys,programKeys,runKeys,D
   function setBusy(value){busy=value;if(!value){slowTransfer=false;nextTransferKey=0;previousTransferKey=null;}for(const id of ['send-program','run-program','slot','replace','power','reset','pause','import-state','export-state','undo-send'])$(id).disabled=value;$('undo-send').disabled=value||!beforeSend;$('cancel-input').hidden=!value;$('transfer-progress').hidden=!value;}
   function enqueue(keys,done=null,macro=false,slow=false){
     if(busy)return;if(paused){paused=false;}
-    if(macro){queue=[];completed=0;queueTotal=keys.length;slowTransfer=slow;nextTransferKey=0;previousTransferKey=null;setBusy(true);$('transfer-progress').max=queueTotal;$('transfer-progress').value=0;}
+    if(macro){clearRunGuide();queue=[];completed=0;queueTotal=keys.length;slowTransfer=slow;nextTransferKey=0;previousTransferKey=null;setBusy(true);$('transfer-progress').max=queueTotal;$('transfer-progress').value=0;}
     queue.push(...keys);if(done)queueEnd=done;
   }
   function finishQueue(){if(busy){setBusy(false);$('transfer-status').textContent='Transfer complete.';}const done=queueEnd;queueEnd=null;if(done)done();}
@@ -418,6 +449,7 @@ if(typeof module!=='undefined')module.exports={compileKeys,programKeys,runKeys,D
           if(!slowTransfer||now>=nextTransferKey){
             for(let n=0;n<(slowTransfer?1:3)&&queue.length;n++){
               const k=queue.shift();machine.press(k,80);
+              advanceRunGuide(k);
               const b=keyButtons.get(k);if(b){b.classList.add('pressed');setTimeout(()=>b.classList.remove('pressed'),75);}
               if(slowTransfer){
                 const lineEnd=k===50||(k===13&&previousTransferKey===1);
@@ -434,10 +466,10 @@ if(typeof module!=='undefined')module.exports={compileKeys,programKeys,runKeys,D
       }
       if(frame++%3===0)draw();
       if(frame%30===0)$('debug').textContent=`PC ${machine.pc.toString(16).toUpperCase().padStart(4,'0')}   F ${machine.flag.toString(16).toUpperCase().padStart(2,'0')}   IE ${machine.ie.toString(16).toUpperCase().padStart(2,'0')}\n${machine.instructions.toLocaleString('en-US')} instructions · RAM 8,192 bytes\nLCD ${machine.lcd.visible?'active':'inactive'} · ${machine.lcd.width} columns per character`;
-    }catch(e){queue=[];queueEnd=null;setBusy(false);paused=true;tell('Execution stopped: '+e.message,true,0);}
+    }catch(e){queue=[];queueEnd=null;clearRunGuide();setBusy(false);paused=true;tell('Execution stopped: '+e.message,true,0);}
     requestAnimationFrame(tick);
   }
-  function cancel(){queue=[];queueEnd=null;gameActive=false;setBusy(false);machine.keys.clear();machine.keyboard();machine.press(35);dirty=true;$('transfer-status').textContent='Transfer stopped. You can undo the transfer.';draw();}
+  function cancel(){queue=[];queueEnd=null;clearRunGuide();gameActive=false;setBusy(false);machine.keys.clear();machine.keyboard();machine.press(35);dirty=true;$('transfer-status').textContent='Transfer stopped. You can undo the transfer.';draw();}
   $('cancel-input').onclick=cancel;
   function tab(name){for(const b of document.querySelectorAll('[data-tab]')){const active=b.dataset.tab===name;b.setAttribute('aria-selected',active);b.tabIndex=active?0:-1;$('panel-'+b.dataset.tab).hidden=!active;}}
   const tabs=[...document.querySelectorAll('[data-tab]')];for(const b of tabs){b.onclick=()=>tab(b.dataset.tab);b.onkeydown=e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();e.stopPropagation();const n=e.key==='Home'?0:e.key==='End'?2:(tabs.indexOf(b)+(e.key==='ArrowRight'?1:2))%3;tab(tabs[n].dataset.tab);tabs[n].focus();};}
@@ -445,7 +477,7 @@ if(typeof module!=='undefined')module.exports={compileKeys,programKeys,runKeys,D
   function count(){const text=$('editor').value;$('editor-count').textContent=text.length+' characters';const example=library.find(ex=>ex.controls&&ex.code.trim()===text.trim());$('program-help').textContent=example?.controls||'';$('program-help').hidden=!example;dirty=true;}
   $('editor').oninput=()=>{$('editor-origin').textContent='· custom';count();};
   for(const b of document.querySelectorAll('[data-insert]'))b.onclick=()=>{const e=$('editor');e.setRangeText(b.dataset.insert,e.selectionStart,e.selectionEnd,'end');e.focus();count();};
-  $('slot').onchange=()=>{$('run-program').textContent='Run P'+$('slot').value;dirty=true;};
+  $('slot').onchange=()=>{clearRunGuide();$('run-program').textContent='Run P'+$('slot').value;dirty=true;};
   function renderExamples(){
     const q=$('search').value.trim().toLocaleLowerCase('en-US'),cat=$('category').value;
     const examples=library.filter(ex=>(!cat||ex.category===cat)&&(!q||[ex.title,ex.category,ex.code,ex.summary].join(' ').toLocaleLowerCase('en-US').includes(q)));
@@ -465,18 +497,26 @@ if(typeof module!=='undefined')module.exports={compileKeys,programKeys,runKeys,D
   $('download-example').onclick=()=>download('fx-8000g-example-'+selected.id+'.fxp',selected.code);
   $('open-program').onclick=()=>$('program-file').click();
   $('program-file').onchange=async()=>{const f=$('program-file').files[0];try{if(f){if(f.size>100000)throw Error('Text files must be smaller than 100 KB.');replaceEditor(await f.text(),f.name);tab('editor');tell('Text opened in the editor. Send it to the calculator to update its memory.');}}catch(e){tell(e.message,true);}$('program-file').value='';};
-  $('send-program').onclick=()=>{try{const slot=Number($('slot').value),text=$('editor').value,replace=$('replace').checked,keys=programKeys(text,slot,replace);beforeSend=machine.snapshot();beforeSendGames={slots:[...gameSlots],active:gameActive};gameSlots[slot]=false;gameActive=false;if(machine.sleep){machine.press(35);machine.run(910000);}enqueue(keys,()=>{gameSlots[slot]=replace&&text.trim()===maze.code.trim();$('transfer-status').textContent='Loaded in P'+slot+' · Click Run P'+slot+' when ready.';tell('Program loaded in P'+slot+'. It has not been run. Click “Run P'+slot+'” when ready.');persist();},true,true);}catch(e){tell(e.message,true);}};
-  $('run-program').onclick=()=>{const slot=Number($('slot').value);gameActive=false;enqueue(runKeys(slot),()=>{gameActive=gameSlots[slot];dirty=true;$('transfer-status').textContent=gameActive?'Maze running. Use 4, 6, and 8 when drawing finishes.':'Program running. EXE continues after pauses; AC stops it.';if(!gameActive&&$('editor').value.trim()===maze.code.trim())tell('To enable direct controls for this session, click “Send to calculator” and run the maze again.',false,0);canvas.focus();},true);};
-  $('undo-send').onclick=()=>{if(beforeSend){machine.restore(beforeSend);if(beforeSendGames){gameSlots=[...beforeSendGames.slots];gameActive=beforeSendGames.active;}else{gameSlots.fill(false);gameActive=false;}beforeSend=null;beforeSendGames=null;$('undo-send').disabled=true;dirty=true;draw();persist();tell('State from before the transfer restored.');}};
+  $('send-program').onclick=()=>{try{const slot=Number($('slot').value),text=$('editor').value,replace=$('replace').checked,keys=programKeys(text,slot,replace);beforeSend=machine.snapshot();beforeSendGames={slots:[...gameSlots],active:gameActive};beforeSendGuide=runGuide?{...runGuide}:null;gameSlots[slot]=false;gameActive=false;if(machine.sleep){machine.press(35);machine.run(910000);}enqueue(keys,()=>{gameSlots[slot]=replace&&text.trim()===maze.code.trim();runGuide={slot,index:0};updateRunGuide();$('transfer-status').textContent='Loaded in P'+slot+' · Click Run P'+slot+' when ready.';tell('Program loaded in P'+slot+'. It has not been run. '+($('show-run-guide').checked?'Follow the highlighted keys or click “Run P'+slot+'”.':'Click “Run P'+slot+'” when ready.'));persist();},true,true);}catch(e){tell(e.message,true);}};
+  $('run-program').onclick=()=>{const slot=Number($('slot').value);gameActive=false;enqueue(runKeys(slot),()=>programStarted(slot),true);};
+  $('undo-send').onclick=()=>{if(beforeSend){machine.restore(beforeSend);if(beforeSendGames){gameSlots=[...beforeSendGames.slots];gameActive=beforeSendGames.active;}else{gameSlots.fill(false);gameActive=false;}runGuide=beforeSendGuide?{...beforeSendGuide}:null;updateRunGuide();beforeSend=null;beforeSendGames=null;beforeSendGuide=null;$('undo-send').disabled=true;dirty=true;draw();persist();tell('State from before the transfer restored.');}};
   $('command-form').onsubmit=e=>{e.preventDefault();if(busy)return;try{const keys=compileKeys($('command').value);if(!keys.length)return;gameActive=false;enqueue([35,6,41,...keys,50],()=>{$('transfer-status').textContent='Calculation complete.';canvas.focus();},true);}catch(err){tell(err.message,true);}};
   $('pause').onclick=()=>{paused=!paused;draw();};
   $('step').onclick=()=>{if(paused&&!busy){machine.step();dirty=true;draw();}};
-  $('power').onclick=()=>enqueue([machine.sleep?35:51]);
+  $('power').onclick=()=>{clearRunGuide();enqueue([machine.sleep?35:51]);};
   $('screenshot').onclick=()=>canvas.toBlob(blob=>download('fx-8000g-screen.png',blob),'image/png');
   $('reset').onclick=()=>$('reset-dialog').showModal();$('reset-cancel').onclick=()=>$('reset-dialog').close();
-  $('reset-confirm').onclick=()=>{queue=[];queueEnd=null;beforeSend=machine.snapshot();beforeSendGames={slots:[...gameSlots],active:gameActive};gameSlots.fill(false);gameActive=false;machine.ram.fill(0);machine.mr.fill(0);machine.initialize();machine.press(35);paused=false;setBusy(false);dirty=true;draw();persist();$('reset-dialog').close();tell('Memory reset. Use “Undo transfer” to recover the previous state.');};
-  function session(){return {format:'fx8000g-session',version:1,machine:machine.snapshot(),editor:$('editor').value,slot:Number($('slot').value),speed:Number($('speed').value),replace:$('replace').checked,games:{slots:gameSlots,active:gameActive,direct:$('game-direct').checked}};}
-  function restoreSession(s){if(s?.format!=='fx8000g-session'||s.version!==1||typeof s.editor!=='string'||s.editor.length>100000||!Number.isInteger(s.slot)||s.slot<0||s.slot>9||![.5,1,2,4].includes(s.speed)||typeof s.replace!=='boolean')throw Error('Invalid session file.');if(s.games&&(!Array.isArray(s.games.slots)||s.games.slots.length!==10||s.games.slots.some(x=>typeof x!=='boolean')||typeof s.games.active!=='boolean'||typeof s.games.direct!=='boolean'))throw Error('Invalid controls state.');machine.restore(s.machine);gameSlots=s.games?[...s.games.slots]:Array(10).fill(false);gameActive=s.games?.active||false;$('game-direct').checked=s.games?.direct??true;$('editor').value=s.editor;$('slot').value=s.slot;$('speed').value=s.speed;$('replace').checked=s.replace;$('run-program').textContent='Run P'+s.slot;$('editor-origin').textContent='· restored session';count();}
+  $('reset-confirm').onclick=()=>{queue=[];queueEnd=null;beforeSend=machine.snapshot();beforeSendGames={slots:[...gameSlots],active:gameActive};beforeSendGuide=runGuide?{...runGuide}:null;clearRunGuide();gameSlots.fill(false);gameActive=false;machine.ram.fill(0);machine.mr.fill(0);machine.initialize();machine.press(35);paused=false;setBusy(false);dirty=true;draw();persist();$('reset-dialog').close();tell('Memory reset. Use “Undo transfer” to recover the previous state.');};
+  function session(){return {format:'fx8000g-session',version:1,machine:machine.snapshot(),editor:$('editor').value,slot:Number($('slot').value),speed:Number($('speed').value),replace:$('replace').checked,games:{slots:gameSlots,active:gameActive,direct:$('game-direct').checked},runHelp:{version:2,enabled:$('show-run-guide').checked,pending:runGuide?{...runGuide}:null}};}
+  function restoreSession(s){
+    if(s?.format!=='fx8000g-session'||s.version!==1||typeof s.editor!=='string'||s.editor.length>100000||!Number.isInteger(s.slot)||s.slot<0||s.slot>9||![.5,1,2,4].includes(s.speed)||typeof s.replace!=='boolean')throw Error('Invalid session file.');
+    if(s.games&&(!Array.isArray(s.games.slots)||s.games.slots.length!==10||s.games.slots.some(x=>typeof x!=='boolean')||typeof s.games.active!=='boolean'||typeof s.games.direct!=='boolean'))throw Error('Invalid controls state.');
+    if(s.runHelp!==undefined){const h=s.runHelp,p=h?.pending;if(!h||(h.version!==undefined&&h.version!==2)||typeof h.enabled!=='boolean'||!(p===null||(p&&Number.isInteger(p.slot)&&p.slot>=0&&p.slot<=9&&Number.isInteger(p.index)&&p.index>=0&&p.index<runKeys(p.slot).length-(h.version===2?1:0))))throw Error('Invalid run guide state.');}
+    machine.restore(s.machine);gameSlots=s.games?[...s.games.slots]:Array(10).fill(false);gameActive=s.games?.active||false;$('game-direct').checked=s.games?.direct??true;
+    // Earlier saved guides included AC; preserve their next key when removing that first step.
+    $('show-run-guide').checked=s.runHelp?.enabled??true;runGuide=s.runHelp?.pending?{slot:s.runHelp.pending.slot,index:Math.max(0,s.runHelp.pending.index-(s.runHelp.version===2?0:1))}:null;updateRunGuide();
+    $('editor').value=s.editor;$('slot').value=s.slot;$('speed').value=s.speed;$('replace').checked=s.replace;$('run-program').textContent='Run P'+s.slot;$('editor-origin').textContent='· restored session';count();
+  }
   function persist(){if(!saveAvailable)return;try{localStorage.setItem(STORAGE,JSON.stringify(session()));$('autosave').textContent='Saved in this browser · '+new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});dirty=false;}catch(e){saveAvailable=false;$('autosave').textContent='Autosave unavailable. Use “Save state”.';}}
   $('export-state').onclick=()=>download('fx-8000g-state.json',JSON.stringify(session()),'application/json');
   $('import-state').onclick=()=>$('state-file').click();
