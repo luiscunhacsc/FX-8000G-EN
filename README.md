@@ -8,11 +8,11 @@ The emulator is a single HTML file that works offline. Everything needed to laun
 
 ## Start here
 
-Clone the repository:
+Clone the [FX-8000G-EN repository](https://github.com/luiscunhacsc/FX-8000G-EN):
 
 ```sh
-git clone https://github.com/luiscunhacsc/FX-8000G-en-US.git
-cd FX-8000G-en-US
+git clone https://github.com/luiscunhacsc/FX-8000G-EN.git
+cd FX-8000G-EN
 ```
 
 Open **[FX-8000G.html](FX-8000G.html)** locally in your web browser. You can also use the launcher for your operating system:
@@ -152,7 +152,7 @@ The emulator also tries to autosave in your browser. Storage availability depend
 ## Repository layout
 
 ```text
-FX-8000G-en-US/
+FX-8000G-EN/
 ├── FX-8000G.html       # Complete offline emulator and built-in library
 ├── README.md          # This guide
 ├── Start-Windows.exe  # Windows launcher
